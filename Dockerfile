@@ -1,11 +1,24 @@
-FROM node:current-alpine3.19
+# Build stage
+FROM node:current-alpine AS builder
 
-# Setting workdir to app
 WORKDIR /app
 
-RUN npm install -g npm@latest
+COPY package*.json ./
 
-COPY package-lock.json .
-COPY package.json .
+RUN npm i
 
-RUN npm install i
+COPY . .
+
+RUN npm run build
+
+
+# Production stage
+FROM node:current-alpine
+
+WORKDIR /app
+
+COPY --from=builder /app/next.config.mjs ./next.config.mjs
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json

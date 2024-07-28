@@ -1,0 +1,18 @@
+
+
+services:
+  ui:
+    build: .
+    command: npm run start
+    expose:
+      - 3000
+    env_file:
+      - .env.local
+
+  nginx:
+    build: ./nginx
+    ports:
+    # if i map 80:80 then i will be able to access my next app at http://localhost instead of http://localhost:1336
+      - 1336:80
+    depends_on:
+      - ui

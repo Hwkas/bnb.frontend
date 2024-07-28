@@ -9,6 +9,14 @@ const nextConfig = {
                 pathname: "/**",
             }
         ]
+    },
+    experimental: {
+        serverActions: {
+            allowedOrigins: [
+                "localhost:3000",
+                `${process.env.NEXT_PUBLIC_HOST_NAME}:${process.env.NEXT_NGINX_PORT}`
+            ],
+        }
     }
 };
 

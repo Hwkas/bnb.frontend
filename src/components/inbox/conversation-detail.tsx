@@ -18,7 +18,7 @@ interface ConversationDetailProps {
 }
 
 const ConversationDetail: React.FC<ConversationDetailProps> = ({ userId, token, conversation, messages }) => {
-    const messagesDiv = useRef(null);
+    const messagesDiv = useRef<HTMLDivElement>(null);
     const [newMessage, setNewMessage] = useState("");
     const [realTimeMessage, setRealTimeMessage] = useState<MessageType[]>([]);
 
