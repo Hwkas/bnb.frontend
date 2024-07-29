@@ -32,7 +32,7 @@ export async function handleRefresh() {
 
     const refresh_token = await getRefreshToken();
 
-    const token = await fetch("http://localhost:8000/api/accounts/token/refresh/", {
+    const token = await fetch(`http://${process.env.NEXT_PUBLIC_API_HOST}/api/accounts/token/refresh/`, {
         method: "POST",
         body: JSON.stringify({ refresh: refresh_token }),
         headers: {
@@ -72,8 +72,12 @@ export async function getUserId() {
 
 export async function getAccessToken() {
     let access_token = cookies().get("session_access_token")?.value;
+    let refresh_token = cookies().get("session_refresh_token")?.value;
 
     if (!access_token) {
+        if (!refresh_token) {
+            return null;
+        }
         access_token = await handleRefresh();
     }
     return access_token;
