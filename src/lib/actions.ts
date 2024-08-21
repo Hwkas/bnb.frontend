@@ -7,21 +7,24 @@ import { cookies } from "next/headers";
 export async function handleLogin(userId: string, access_token: string, refresh_token: string) {
     cookies().set("session_user_id", userId, {
         httpOnly: true,
-        secure: process.env.NODE_ENV == "production",
+        secure: false, // TODO remove this line, should be true but due to current deploy resource need to set it to false
+        // secure: process.env.NODE_ENV == "production",
         maxAge: 60 * 60 * 24 * 7, // one week
         path: "/"
     });
 
     cookies().set("session_access_token", access_token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV == "production",
+        secure: false, // TODO remove this line, should be true but due to current deploy resource need to set it to false
+        // secure: process.env.NODE_ENV == "production",
         maxAge: 60 * 60, // one hour
         path: "/"
     });
 
     cookies().set("session_refresh_token", refresh_token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV == "production",
+        secure: false, // TODO remove this line, should be true but due to current deploy resource need to set it to false
+        // secure: process.env.NODE_ENV == "production",
         maxAge: 60 * 60 * 24 * 7, // one hour
         path: "/"
     });
@@ -46,7 +49,8 @@ export async function handleRefresh() {
             if (json.access) {
                 cookies().set("session_access_token", json.access, {
                     httpOnly: true,
-                    secure: process.env.NODE_ENV == "production",
+                    secure: false, // TODO remove this line, should be true but due to current deploy resource need to set it to false
+                    // secure: process.env.NODE_ENV == "production",
                     maxAge: 60 * 60, // one hour
                     path: "/"
                 });
