@@ -7,6 +7,7 @@ import useSearchModal from "@/hooks/use-search-model";
 
 const SearchFilters = () => {
     const searchModal = useSearchModal();
+
     return (
         <div
             onClick={() => searchModal.open("location")}

@@ -66,8 +66,8 @@ const AddPropertyModal = () => {
             if (response.success) {
                 console.log("sucess :)");
 
-                router.push("/?added=true");
                 addPropertyModal.close();
+                router.push("/?added=true");
             } else {
                 const responseErrors: string[] = Object.values(response).map((error: any) => {
                     return error;

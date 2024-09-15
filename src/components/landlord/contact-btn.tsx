@@ -2,8 +2,6 @@
 
 
 import { useRouter } from "next/navigation";
-// my components
-import LoginModal from "../modal/login-modal";
 // my functions
 import apiServices from "@/services/api-services";
 import useLoginModal from "@/hooks/use-login-modal";

@@ -32,10 +32,10 @@ const LoginModal = () => {
         );
 
         if (response.access) {
-            handleLogin(response.user.pk, response.access, response.refresh);
+            await handleLogin(response.user.pk, response.access, response.refresh);
 
             loginModal.close();
-            router.push("/");
+            router.push("/?refresh=true");
         }
         else {
             setErrors(response.non_field_errors);

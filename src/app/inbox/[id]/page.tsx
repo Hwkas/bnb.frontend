@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 // my components
 import ConversationDetail from "@/components/inbox/conversation-detail";
 // my functions

@@ -2,7 +2,7 @@
 
 
 import { useState, useEffect, useRef } from "react";
-import useWebSocket, { ReadyState } from "react-use-websocket";
+import useWebSocket from "react-use-websocket";
 // my components
 import CustomButton from "../forms/custom-btn";
 // my custom types
