@@ -1,19 +1,26 @@
-# Build stage
-FROM node:current-alpine AS builder
+# Base Image
+FROM node:current-alpine AS base
+
+
+# Build Stage
+FROM base AS builder
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm i
+RUN \
+    if [ "$NODE_ENV" = "production" ]; then npm ci; \
+    else npm i; \
+    fi
 
 COPY . .
 
 RUN npm run build
 
 
-# Production stage
-FROM node:current-alpine
+# Production Stage
+FROM base AS runner
 
 WORKDIR /app
 
