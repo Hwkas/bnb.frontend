@@ -9,14 +9,14 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN \
-    if [ "$NODE_ENV" = "production" ]; then npm ci; \
+RUN npm i -g pnpm && \
+    if [ "$NODE_ENV" = "production" ]; then pnpm install --frozen-lockfile --prod; \
     else npm i; \
     fi
 
 COPY . .
 
-RUN npm run build
+RUN pnpm run build
 
 
 # Production Stage
