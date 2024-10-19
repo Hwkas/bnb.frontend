@@ -87,8 +87,10 @@ const UserNav: React.FC<UserNavProps> = ({ userId }) => {
                                 <MenuLink
                                     label="Logout"
                                     onClick={
-                                        () => {
-                                            resetAuthCookies();
+                                        async () => {
+                                            setIsOpen(false);
+                                            await resetAuthCookies();
+                                            router.push("/?refresh_logout=true");
                                         }
                                     }
                                 />

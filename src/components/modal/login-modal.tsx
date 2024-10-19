@@ -35,7 +35,7 @@ const LoginModal = () => {
             await handleLogin(response.user.pk, response.access, response.refresh);
 
             loginModal.close();
-            router.push("/?refresh=true");
+            router.push("/?refresh_login=true");
         }
         else {
             setErrors(response.non_field_errors);
