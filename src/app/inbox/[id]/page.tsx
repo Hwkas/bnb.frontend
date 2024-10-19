@@ -11,8 +11,8 @@ export type MessageType = {
     name: string;
     body: string;
     conversationId: string;
-    sent_to: UserType;
-    created_by: UserType;
+    recipient: UserType;
+    sender: UserType;
 }
 
 

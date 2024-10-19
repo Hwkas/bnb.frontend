@@ -26,7 +26,7 @@ const ConversationDetail: React.FC<ConversationDetailProps> = ({ userId, token, 
     const other_user = conversation.users?.find((user) => user.id != userId);
 
     const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(
-        `${process.env.NEXT_PUBLIC_WS_HOST}/ws/${conversation.id}/?token=${token}`,
+        `${process.env.NEXT_PUBLIC_WS_HOST}${conversation.id}/?token=${token}`,
         { share: false, shouldReconnect: () => true }
     );
 
@@ -44,8 +44,8 @@ const ConversationDetail: React.FC<ConversationDetailProps> = ({ userId, token, 
                 id: "",
                 name: lastJsonMessage.name as string,
                 body: lastJsonMessage.body as string,
-                sent_to: other_user as UserType,
-                created_by: my_user as UserType,
+                recipient: other_user as UserType,
+                sender: my_user as UserType,
                 conversationId: conversation.id,
             }
             setRealTimeMessage((realTimeMessage) => [...realTimeMessage, message]);
@@ -65,7 +65,7 @@ const ConversationDetail: React.FC<ConversationDetailProps> = ({ userId, token, 
             data: {
                 body: newMessage,
                 name: my_user?.name,
-                sent_to_id: other_user?.id,
+                recipient_id: other_user?.id,
                 conversation_id: conversation.id,
             }
         });
@@ -84,9 +84,9 @@ const ConversationDetail: React.FC<ConversationDetailProps> = ({ userId, token, 
                 {messages.map((message, index) => (
                     < div
                         key={index}
-                        className={`w-[80%] py-4 px-6 rounded-xl ${message.created_by.id === my_user?.id ? "bg-blue-200 ml-[20%]" : "bg-gray-200"}`}
+                        className={`w-[80%] py-4 px-6 rounded-xl ${message.recipient.id === my_user?.id ? "bg-blue-200 ml-[20%]" : "bg-gray-200"}`}
                     >
-                        <p className="font-bold text-gray-500">{message.created_by.name}</p>
+                        <p className="font-bold text-gray-500">{message.recipient.name}</p>
                         <p>{message.body}</p>
                     </div>
                 ))}
@@ -94,7 +94,7 @@ const ConversationDetail: React.FC<ConversationDetailProps> = ({ userId, token, 
                 {realTimeMessage.map((message, index) => (
                     < div
                         key={index}
-                        className={`w-[80%] py-4 px-6 rounded-xl ${message.created_by.id === my_user?.id ? "bg-blue-200 ml-[20%]" : "bg-gray-200"}`}
+                        className={`w-[80%] py-4 px-6 rounded-xl ${message.recipient.id === my_user?.id ? "bg-blue-200 ml-[20%]" : "bg-gray-200"}`}
                     >
                         <p className="font-bold text-gray-500">{message.name}</p>
                         <p>{message.body}</p>

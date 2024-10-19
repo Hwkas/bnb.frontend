@@ -18,7 +18,7 @@ const ContactButton: React.FC<ContactButtonProps> = ({ userId, landLordId }) => 
 
     const startConversation = async () => {
         if (userId) {
-            const response = await apiServices.get(`/api/chat/start/${userId}`);
+            const response = await apiServices.get(`/api/chat/start/${landLordId}`);
 
             if (response.conversation_id) {
                 router.push(`/inbox/${response.conversation_id}`);
