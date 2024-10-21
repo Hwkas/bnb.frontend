@@ -16,7 +16,7 @@ services:
     build: ./nginx
     ports:
     # if i map 80:80 then i will be able to access my next app at http://localhost instead of http://localhost:1336
-      - 1336:80
+      - 80:80
     volumes:
       - static:/app/static/
       - pages:/app/pages/
