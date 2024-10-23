@@ -7,7 +7,7 @@ import apiServices from "@/services/api-services";
 
 interface FavouriteButtonProps {
     id: string;
-    is_favourite: boolean;
+    is_favourite: number | null;
     markFavourite: (is_favourite: boolean) => void;
 };
 
