@@ -1,13 +1,11 @@
 "use client";
 
-
 import React from "react";
-
 
 interface MenuLinkProps {
     label: string;
     onClick?: () => void;
-};
+}
 
 const MenuLink: React.FC<MenuLinkProps> = ({ label, onClick }) => {
     return (

@@ -1,6 +1,5 @@
 import countries from "world-countries";
 
-
 const formattedCountires = countries.map((country) => ({
     value: country.cca2,
     label: country.name.common,
@@ -15,7 +14,7 @@ const useCountries = () => {
 
     return {
         getAll,
-        getByValue
+        getByValue,
     };
 };
 

@@ -1,0 +1,6 @@
+{
+  "experimentalTernaries": true,
+  "singleAttributePerLine":true,
+  "quoteProps": "consistent",
+  "tabWidth": 4
+}

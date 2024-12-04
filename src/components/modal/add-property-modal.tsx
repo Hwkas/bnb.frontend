@@ -1,6 +1,5 @@
 "use client";
 
-
 import { ChangeEvent, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -13,7 +12,6 @@ import SelectCountry, { SelectCountryValue } from "../forms/select-country";
 import useAddPropertyModal from "@/hooks/use-add-property-modal";
 // my functions
 import apiServices from "@/services/api-services";
-
 
 const AddPropertyModal = () => {
     // states
@@ -48,20 +46,30 @@ const AddPropertyModal = () => {
     const submitForm = async () => {
         console.log("submit form");
 
-        if (dataCategory && dataTitle && dataDescription && dataPrice && dataCountry && dataImage) {
+        if (
+            dataCategory &&
+            dataTitle &&
+            dataDescription &&
+            dataPrice &&
+            dataCountry &&
+            dataImage
+        ) {
             const formData = new FormData();
             formData.append("category", dataCategory);
             formData.append("title", dataTitle);
             formData.append("description", dataDescription);
             formData.append("price_per_night", dataPrice);
             formData.append("bedrooms", dataBedrooms);
-            formData.append("bathrooms", dataBathrooms)
+            formData.append("bathrooms", dataBathrooms);
             formData.append("guests", dataGuests);
             formData.append("country", dataCountry.label);
             formData.append("country_code", dataCountry.value);
             formData.append("image", dataImage);
 
-            const response = await apiServices.postWithToken("/api/properties/create/", formData);
+            const response = await apiServices.postWithToken(
+                "/api/properties/create/",
+                formData,
+            );
 
             if (response.success) {
                 console.log("sucess :)");
@@ -69,9 +77,11 @@ const AddPropertyModal = () => {
                 addPropertyModal.close();
                 router.push("/?added=true");
             } else {
-                const responseErrors: string[] = Object.values(response).map((error: any) => {
-                    return error;
-                });
+                const responseErrors: string[] = Object.values(response).map(
+                    (error: any) => {
+                        return error;
+                    },
+                );
 
                 setErrors(responseErrors);
             }
@@ -80,7 +90,7 @@ const AddPropertyModal = () => {
 
     const content = (
         <>
-            {currentStep == 1 ? (
+            {currentStep == 1 ?
                 <>
                     <h2 className="mb-6 text-2xl">Choose Category</h2>
 
@@ -94,7 +104,7 @@ const AddPropertyModal = () => {
                         onClick={() => setCurrentStep(2)}
                     />
                 </>
-            ) : currentStep == 2 ? (
+            : currentStep == 2 ?
                 <>
                     <h2 className="mb-6 text-2xl">Describe your place</h2>
 
@@ -113,7 +123,9 @@ const AddPropertyModal = () => {
                             <label>Description</label>
                             <textarea
                                 value={dataDescription}
-                                onChange={(e) => setDataDescription(e.target.value)}
+                                onChange={(e) =>
+                                    setDataDescription(e.target.value)
+                                }
                                 className="w-full p-4 border border-gray-600 rounded-xl"
                             ></textarea>
                         </div>
@@ -130,7 +142,7 @@ const AddPropertyModal = () => {
                         onClick={() => setCurrentStep(3)}
                     />
                 </>
-            ) : currentStep == 3 ? (
+            : currentStep == 3 ?
                 <>
                     <h2 className="mb-6 text-2xl">Details</h2>
 
@@ -150,7 +162,9 @@ const AddPropertyModal = () => {
                             <input
                                 type="number"
                                 value={dataBedrooms}
-                                onChange={(e) => setDataBedrooms(e.target.value)}
+                                onChange={(e) =>
+                                    setDataBedrooms(e.target.value)
+                                }
                                 className="w-full p-4 border border-gray-600 rounded-xl"
                             />
                         </div>
@@ -160,7 +174,9 @@ const AddPropertyModal = () => {
                             <input
                                 type="number"
                                 value={dataBathrooms}
-                                onChange={(e) => setDataBathrooms(e.target.value)}
+                                onChange={(e) =>
+                                    setDataBathrooms(e.target.value)
+                                }
                                 className="w-full p-4 border border-gray-600 rounded-xl"
                             />
                         </div>
@@ -187,14 +203,16 @@ const AddPropertyModal = () => {
                         onClick={() => setCurrentStep(4)}
                     />
                 </>
-            ) : currentStep == 4 ? (
+            : currentStep == 4 ?
                 <>
                     <h2 className="mb-6 text-2xl">Location</h2>
 
                     <div className="pt-3 pb-6 space-y-4">
                         <SelectCountry
                             value={dataCountry}
-                            onChange={(value) => setDataCountry(value as SelectCountryValue)}
+                            onChange={(value) =>
+                                setDataCountry(value as SelectCountryValue)
+                            }
                         />
                     </div>
 
@@ -209,8 +227,7 @@ const AddPropertyModal = () => {
                         onClick={() => setCurrentStep(5)}
                     />
                 </>
-            ) : (
-                <>
+            :   <>
                     <h2 className="mb-6 text-2xl">Image</h2>
 
                     <div className="pt-3 pb-6 space-y-4">
@@ -253,7 +270,7 @@ const AddPropertyModal = () => {
                         onClick={submitForm}
                     />
                 </>
-            )}
+            }
         </>
     );
 

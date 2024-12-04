@@ -5,7 +5,6 @@ import { getUserId, getAccessToken } from "@/lib/actions";
 import apiServices from "@/services/api-services";
 import { UserType } from "../page";
 
-
 export type MessageType = {
     id: string;
     name: string;
@@ -13,8 +12,7 @@ export type MessageType = {
     conversationId: string;
     recipient: UserType;
     sender: UserType;
-}
-
+};
 
 const ConversationPage = async ({ params }: { params: { id: string } }) => {
     const userId = await getUserId();
@@ -26,9 +24,9 @@ const ConversationPage = async ({ params }: { params: { id: string } }) => {
                 <p>You need to be authenticated </p>
             </main>
         );
-    };
+    }
 
-    const response = await apiServices.get(`/api/chat/${params.id}/`)
+    const response = await apiServices.get(`/api/chat/${params.id}/`);
 
     return (
         <main className="max-w-[1500px] mx-auto px-6 pb-6">
@@ -38,7 +36,7 @@ const ConversationPage = async ({ params }: { params: { id: string } }) => {
                 conversation={response.conversation}
                 messages={response.messages}
             />
-        </main >
+        </main>
     );
 };
 

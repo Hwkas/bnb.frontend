@@ -6,9 +6,8 @@ import PropertyList from "@/components/properties/property-list";
 import apiServices from "@/services/api-services";
 import { getUserId } from "@/lib/actions";
 
-
 const LandLordDetailPage = async ({ params }: { params: { pk: string } }) => {
-    const landlord = await apiServices.get(`/api/accounts/${params.pk}`)
+    const landlord = await apiServices.get(`/api/accounts/${params.pk}`);
     const userId = await getUserId();
 
     return (
@@ -24,9 +23,7 @@ const LandLordDetailPage = async ({ params }: { params: { pk: string } }) => {
                             className="rounded-full"
                         />
 
-                        <h1 className="mt-6 text-2xl">
-                            {landlord.name}
-                        </h1>
+                        <h1 className="mt-6 text-2xl">{landlord.name}</h1>
 
                         {userId != params.pk && (
                             <ContactButton
@@ -34,15 +31,12 @@ const LandLordDetailPage = async ({ params }: { params: { pk: string } }) => {
                                 landLordId={params.pk}
                             />
                         )}
-
                     </div>
                 </aside>
 
                 <div className="col-span-1 md:col-span-3 pl-0 md:pl-6">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <PropertyList
-                            landlord_id={params.pk}
-                        />
+                        <PropertyList landlord_id={params.pk} />
                     </div>
                 </div>
             </div>

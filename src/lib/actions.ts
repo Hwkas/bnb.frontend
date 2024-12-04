@@ -1,16 +1,18 @@
 "use server";
 
-
 import { cookies } from "next/headers";
 
-
-export async function handleLogin(userId: string, access_token: string, refresh_token: string) {
+export async function handleLogin(
+    userId: string,
+    access_token: string,
+    refresh_token: string,
+) {
     cookies().set("session_user_id", userId, {
         httpOnly: true,
         secure: false, // TODO remove this line, should be true but due to current deploy resource need to set it to false
         // secure: process.env.NODE_ENV == "production",
         maxAge: 60 * 60 * 24 * 7, // one week
-        path: "/"
+        path: "/",
     });
 
     cookies().set("session_access_token", access_token, {
@@ -18,7 +20,7 @@ export async function handleLogin(userId: string, access_token: string, refresh_
         secure: false, // TODO remove this line, should be true but due to current deploy resource need to set it to false
         // secure: process.env.NODE_ENV == "production",
         maxAge: 60 * 60, // one hour
-        path: "/"
+        path: "/",
     });
 
     cookies().set("session_refresh_token", refresh_token, {
@@ -26,7 +28,7 @@ export async function handleLogin(userId: string, access_token: string, refresh_
         secure: false, // TODO remove this line, should be true but due to current deploy resource need to set it to false
         // secure: process.env.NODE_ENV == "production",
         maxAge: 60 * 60 * 24 * 7, // one hour
-        path: "/"
+        path: "/",
     });
 }
 
@@ -35,15 +37,18 @@ export async function handleRefresh() {
 
     const refresh_token = await getRefreshToken();
 
-    const token = await fetch(`http://${process.env.NEXT_PUBLIC_API_HOST}/api/accounts/token/refresh/`, {
-        method: "POST",
-        body: JSON.stringify({ refresh: refresh_token }),
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-        }
-    })
-        .then(respose => respose.json())
+    const token = await fetch(
+        `http://${process.env.NEXT_PUBLIC_API_HOST}/api/accounts/token/refresh/`,
+        {
+            method: "POST",
+            body: JSON.stringify({ refresh: refresh_token }),
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+        },
+    )
+        .then((respose) => respose.json())
         .then((json) => {
             console.log("Respone Refresh: ", json);
             if (json.access) {
@@ -52,16 +57,18 @@ export async function handleRefresh() {
                     secure: false, // TODO remove this line, should be true but due to current deploy resource need to set it to false
                     // secure: process.env.NODE_ENV == "production",
                     maxAge: 60 * 60, // one hour
-                    path: "/"
+                    path: "/",
                 });
                 return json.access;
             } else {
                 resetAuthCookies();
             }
         })
-        .catch((error) => { console.log("error: ", error) })
+        .catch((error) => {
+            console.log("error: ", error);
+        });
     return token;
-};
+}
 
 export async function resetAuthCookies() {
     cookies().set("session_user_id", "");
@@ -71,7 +78,7 @@ export async function resetAuthCookies() {
 
 export async function getUserId() {
     const userId = cookies().get("session_user_id")?.value;
-    return (userId ? userId : null);
+    return userId ? userId : null;
 }
 
 export async function getAccessToken() {

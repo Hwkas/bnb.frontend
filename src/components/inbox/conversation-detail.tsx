@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState, useEffect, useRef } from "react";
 import useWebSocket from "react-use-websocket";
 // my components
@@ -9,7 +8,6 @@ import CustomButton from "../forms/custom-btn";
 import { ConversationType, UserType } from "@/app/inbox/page";
 import { MessageType } from "@/app/inbox/[id]/page";
 
-
 interface ConversationDetailProps {
     userId: string;
     token: string;
@@ -17,7 +15,12 @@ interface ConversationDetailProps {
     messages: MessageType[];
 }
 
-const ConversationDetail: React.FC<ConversationDetailProps> = ({ userId, token, conversation, messages }) => {
+const ConversationDetail: React.FC<ConversationDetailProps> = ({
+    userId,
+    token,
+    conversation,
+    messages,
+}) => {
     const messagesDiv = useRef<HTMLDivElement>(null);
     const [newMessage, setNewMessage] = useState("");
     const [realTimeMessage, setRealTimeMessage] = useState<MessageType[]>([]);
@@ -27,7 +30,7 @@ const ConversationDetail: React.FC<ConversationDetailProps> = ({ userId, token, 
 
     const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(
         `${process.env.NEXT_PUBLIC_WS_HOST}${conversation.id}/?token=${token}`,
-        { share: false, shouldReconnect: () => true }
+        { share: false, shouldReconnect: () => true },
     );
 
     useEffect(() => {
@@ -35,10 +38,11 @@ const ConversationDetail: React.FC<ConversationDetailProps> = ({ userId, token, 
     }, [readyState]);
 
     useEffect(() => {
-        if (lastJsonMessage
-            && typeof lastJsonMessage === "object"
-            && "name" in lastJsonMessage
-            && "body" in lastJsonMessage
+        if (
+            lastJsonMessage &&
+            typeof lastJsonMessage === "object" &&
+            "name" in lastJsonMessage &&
+            "body" in lastJsonMessage
         ) {
             const message: MessageType = {
                 id: "",
@@ -47,8 +51,11 @@ const ConversationDetail: React.FC<ConversationDetailProps> = ({ userId, token, 
                 recipient: other_user as UserType,
                 sender: my_user as UserType,
                 conversationId: conversation.id,
-            }
-            setRealTimeMessage((realTimeMessage) => [...realTimeMessage, message]);
+            };
+            setRealTimeMessage((realTimeMessage) => [
+                ...realTimeMessage,
+                message,
+            ]);
         }
         scrollToBottom();
     }, [lastJsonMessage]);
@@ -57,7 +64,7 @@ const ConversationDetail: React.FC<ConversationDetailProps> = ({ userId, token, 
         if (messagesDiv.current) {
             messagesDiv.current.scrollTop = messagesDiv.current.scrollHeight;
         }
-    }
+    };
 
     const sendMessage = async () => {
         sendJsonMessage({
@@ -67,7 +74,7 @@ const ConversationDetail: React.FC<ConversationDetailProps> = ({ userId, token, 
                 name: my_user?.name,
                 recipient_id: other_user?.id,
                 conversation_id: conversation.id,
-            }
+            },
         });
 
         setNewMessage("");
@@ -82,25 +89,29 @@ const ConversationDetail: React.FC<ConversationDetailProps> = ({ userId, token, 
                 className="max-h-[400px] overflow-auto flex flex-col space-y-4"
             >
                 {messages.map((message, index) => (
-                    < div
+                    <div
                         key={index}
                         className={`w-[80%] py-4 px-6 rounded-xl ${message.recipient.id === my_user?.id ? "bg-blue-200 ml-[20%]" : "bg-gray-200"}`}
                     >
-                        <p className="font-bold text-gray-500">{message.recipient.name}</p>
+                        <p className="font-bold text-gray-500">
+                            {message.recipient.name}
+                        </p>
                         <p>{message.body}</p>
                     </div>
                 ))}
 
                 {realTimeMessage.map((message, index) => (
-                    < div
+                    <div
                         key={index}
                         className={`w-[80%] py-4 px-6 rounded-xl ${message.recipient.id === my_user?.id ? "bg-blue-200 ml-[20%]" : "bg-gray-200"}`}
                     >
-                        <p className="font-bold text-gray-500">{message.name}</p>
+                        <p className="font-bold text-gray-500">
+                            {message.name}
+                        </p>
                         <p>{message.body}</p>
                     </div>
                 ))}
-            </div >
+            </div>
 
             <div className="mt-6 py-4 px-6 flex border border-gray-300 space-x-4 rounded-xl">
                 <input

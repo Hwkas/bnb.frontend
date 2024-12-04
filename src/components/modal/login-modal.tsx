@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 // my componentss
@@ -11,7 +10,6 @@ import useLoginModal from "@/hooks/use-login-modal";
 // my functions
 import apiServices from "@/services/api-services";
 import { handleLogin } from "@/lib/actions";
-
 
 const LoginModal = () => {
     const router = useRouter();
@@ -32,27 +30,37 @@ const LoginModal = () => {
         );
 
         if (response.access) {
-            await handleLogin(response.user.pk, response.access, response.refresh);
+            await handleLogin(
+                response.user.pk,
+                response.access,
+                response.refresh,
+            );
 
             loginModal.close();
             router.push("/?refresh_login=true");
-        }
-        else {
+        } else {
             setErrors(response.non_field_errors);
         }
-    }
+    };
 
     const content = (
         <>
-            <form action={submitLogin} className="space-y-4">
+            <form
+                action={submitLogin}
+                className="space-y-4"
+            >
                 <input
-                    onChange={(e) => { setEmail(e.target.value) }}
+                    onChange={(e) => {
+                        setEmail(e.target.value);
+                    }}
                     placeholder="Your e-mail"
                     type="email"
                     className="w-full h-54 px-4 border border-gray-300 rounded-xl"
                 />
                 <input
-                    onChange={(e) => { setPasswod(e.target.value) }}
+                    onChange={(e) => {
+                        setPasswod(e.target.value);
+                    }}
                     placeholder="Your password"
                     type="password"
                     className="w-full h-54 px-4 border border-gray-300 rounded-xl"
@@ -65,7 +73,6 @@ const LoginModal = () => {
                         </div>
                     );
                 })}
-
 
                 <CustomButton
                     label="Login"

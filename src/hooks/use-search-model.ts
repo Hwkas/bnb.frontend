@@ -1,6 +1,5 @@
 import { create } from "zustand";
 
-
 export type SearchQueryType = {
     country: string | undefined;
     checkIn: Date | undefined;
@@ -18,7 +17,7 @@ interface SearchModalStore {
     close: () => void;
     query: SearchQueryType;
     setQuery: (query: SearchQueryType) => void;
-};
+}
 
 const useSearchModal = create<SearchModalStore>((set) => ({
     isOpen: false,
@@ -34,7 +33,7 @@ const useSearchModal = create<SearchModalStore>((set) => ({
         bedrooms: 0,
         category: "",
     },
-    setQuery: (query: SearchQueryType) => set({ query: query })
+    setQuery: (query: SearchQueryType) => set({ query: query }),
 }));
 
 export default useSearchModal;

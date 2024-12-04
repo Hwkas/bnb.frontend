@@ -5,13 +5,15 @@ import FavouriteButton from "./favourite-button";
 // my custom types
 import { PropertyType } from "./property-list";
 
-
 interface PropertyProps {
     property: PropertyType;
     markFavourite?: (is_favourite: boolean) => void;
-};
+}
 
-const PropertyListItem: React.FC<PropertyProps> = ({ property, markFavourite }) => {
+const PropertyListItem: React.FC<PropertyProps> = ({
+    property,
+    markFavourite,
+}) => {
     const router = useRouter();
 
     return (
@@ -31,15 +33,15 @@ const PropertyListItem: React.FC<PropertyProps> = ({ property, markFavourite }) 
                     <FavouriteButton
                         id={property.id}
                         is_favourite={property.is_favourite}
-                        markFavourite={(is_favourite) => { markFavourite(is_favourite) }}
+                        markFavourite={(is_favourite) => {
+                            markFavourite(is_favourite);
+                        }}
                     />
                 )}
             </div>
 
             <div className="mt-2">
-                <p className="text-lg font-bold">
-                    {property.title}
-                </p>
+                <p className="text-lg font-bold">{property.title}</p>
             </div>
 
             <div className="mt-2">

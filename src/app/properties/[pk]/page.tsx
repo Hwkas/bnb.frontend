@@ -6,7 +6,6 @@ import ReservationSideBar from "@/components/properties/reservation-side-bar";
 import apiServices from "@/services/api-services";
 import { getUserId } from "@/lib/actions";
 
-
 const PropertyDetailPage = async ({ params }: { params: { pk: string } }) => {
     const property = await apiServices.get(`/api/properties/${params.pk}`);
     const userId = await getUserId();
@@ -26,7 +25,8 @@ const PropertyDetailPage = async ({ params }: { params: { pk: string } }) => {
                 <div className="py-6 pr-6 col-span-3">
                     <h1 className="mb-4 text-4xl">{property.title}</h1>
                     <span className="mb-6 block text-lg text-gray-600">
-                        {property.guests} Guests - {property.bedrooms} Beadroom - {property.bathrooms} Bathroom
+                        {property.guests} Guests - {property.bedrooms} Beadroom
+                        - {property.bathrooms} Bathroom
                     </span>
 
                     <hr />
@@ -36,20 +36,24 @@ const PropertyDetailPage = async ({ params }: { params: { pk: string } }) => {
                         className="py-6 flex items-center space-x-4"
                     >
                         <Image
-                            src={property.landlord.avatar_url || "/images/profile.jpg"}
+                            src={
+                                property.landlord.avatar_url ||
+                                "/images/profile.jpg"
+                            }
                             width={50}
                             height={50}
                             className="rounded-full"
                             alt="Profile Image"
                         />
 
-                        <p><strong>{property.landlord.name}</strong> is your host.</p>
+                        <p>
+                            <strong>{property.landlord.name}</strong> is your
+                            host.
+                        </p>
                     </Link>
 
                     <hr />
-                    <p className="mt-6 text-lg">
-                        {property.description}
-                    </p>
+                    <p className="mt-6 text-lg">{property.description}</p>
                 </div>
 
                 <ReservationSideBar

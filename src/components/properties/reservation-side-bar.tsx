@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState, useEffect } from "react";
 import { Range } from "react-date-range";
 import { differenceInDays, eachDayOfInterval, format } from "date-fns";
@@ -11,12 +10,11 @@ import apiServices from "@/services/api-services";
 // my hooks
 import useLoginModal from "@/hooks/use-login-modal";
 
-
 export type Property = {
     id: string;
     guests: number;
     price_per_night: number;
-}
+};
 
 interface ReservationSideBarProps {
     userId: string | null;
@@ -27,9 +25,12 @@ const initialDateRange = {
     startDate: new Date(),
     endDate: new Date(),
     key: "selection",
-}
+};
 
-const ReservationSideBar: React.FC<ReservationSideBarProps> = ({ userId, property }) => {
+const ReservationSideBar: React.FC<ReservationSideBarProps> = ({
+    userId,
+    property,
+}) => {
     const loginModal = useLoginModal();
 
     const [fee, setFee] = useState<number>(0);
@@ -39,27 +40,36 @@ const ReservationSideBar: React.FC<ReservationSideBarProps> = ({ userId, propert
     const [minDate, serMinDate] = useState<Date>(new Date());
     const [guests, setGuests] = useState<string>("1");
     const [bookedDates, setBookedDates] = useState<Date[]>([]);
-    const guestsRange = Array.from({ length: property.guests }, (_, index) => index + 1);
+    const guestsRange = Array.from(
+        { length: property.guests },
+        (_, index) => index + 1,
+    );
 
     const performBooking = async () => {
         if (userId) {
             if (dateRange.startDate && dateRange.endDate) {
                 const formData = new FormData();
                 formData.append("guests", guests);
-                formData.append("start_date", format(dateRange.startDate, "yyyy-MM-dd"));
-                formData.append("end_date", format(dateRange.endDate, "yyyy-MM-dd"));
+                formData.append(
+                    "start_date",
+                    format(dateRange.startDate, "yyyy-MM-dd"),
+                );
+                formData.append(
+                    "end_date",
+                    format(dateRange.endDate, "yyyy-MM-dd"),
+                );
                 formData.append("number_of_nights", nights.toString());
                 formData.append("total_price", totalPrice.toString());
 
                 const response = await apiServices.postWithToken(
                     `/api/properties/${property.id}/book/`,
-                    formData
-                )
+                    formData,
+                );
 
                 if (response.success) {
-                    console.log("Booking Successful.")
+                    console.log("Booking Successful.");
                 } else {
-                    console.log("Something went wrong...")
+                    console.log("Something went wrong...");
                 }
             }
         } else {
@@ -73,7 +83,7 @@ const ReservationSideBar: React.FC<ReservationSideBarProps> = ({ userId, propert
 
         if (newEndDate <= newStartDate) {
             newEndDate.setDate(newStartDate.getDate() + 1);
-        };
+        }
 
         setDateRange({
             ...dateRange,
@@ -84,8 +94,8 @@ const ReservationSideBar: React.FC<ReservationSideBarProps> = ({ userId, propert
 
     const getReservations = async () => {
         const reservations = await apiServices.get(
-            `/api/properties/${property.id}/reservations/`
-        )
+            `/api/properties/${property.id}/reservations/`,
+        );
 
         let dates: Date[] = [];
 
@@ -95,7 +105,7 @@ const ReservationSideBar: React.FC<ReservationSideBarProps> = ({ userId, propert
                 end: new Date(reservations.end_date),
             });
 
-            dates = [...dates, ...range]
+            dates = [...dates, ...range];
         });
 
         setBookedDates(dates);
@@ -106,50 +116,53 @@ const ReservationSideBar: React.FC<ReservationSideBarProps> = ({ userId, propert
         if (dateRange.startDate && dateRange.endDate) {
             const dayCount = differenceInDays(
                 dateRange.endDate,
-                dateRange.startDate
+                dateRange.startDate,
             );
 
             if (dayCount && property.price_per_night) {
-                const _fee = (dayCount * property.price_per_night * 0.05);
+                const _fee = dayCount * property.price_per_night * 0.05;
                 setFee(_fee);
                 setTotalPrice(dayCount * property.price_per_night + _fee);
                 setNights(dayCount);
             } else {
-                const _fee = (property.price_per_night * 0.05);
+                const _fee = property.price_per_night * 0.05;
                 setFee(_fee);
                 setTotalPrice(property.price_per_night + _fee);
                 setNights(1);
             }
-        };
+        }
     }, [dateRange]);
 
     return (
         <aside className="mt-4 p-6 col-span-2 rounded-xl border border-gray-300 shadow-xl">
-            <h2 className="mb-5 text-2xl">${property.price_per_night}per night</h2>
+            <h2 className="mb-5 text-2xl">
+                ${property.price_per_night}per night
+            </h2>
 
             <DatePicker
                 value={dateRange}
                 bookedDates={bookedDates}
-                onChange={(value) => { _setDateRange(value.selection) }}
+                onChange={(value) => {
+                    _setDateRange(value.selection);
+                }}
             />
 
             <div className="mb-6 p-3 border border-gray-400 rounded-xl">
-                <label className="mb-2  block font-bold text-xs">
-                    Guests
-                </label>
+                <label className="mb-2  block font-bold text-xs">Guests</label>
                 <select
                     className="w-full ml-1 text-xm"
                     value={guests}
                     onChange={(e) => setGuests(e.target.value)}
                 >
-                    {guestsRange.map(number => (
+                    {guestsRange.map((number) => (
                         <option
                             key={number}
                             value={number}
                         >
                             {number}
                         </option>
-                    ))};
+                    ))}
+                    ;
                 </select>
             </div>
 
@@ -161,7 +174,9 @@ const ReservationSideBar: React.FC<ReservationSideBarProps> = ({ userId, propert
             </div>
 
             <div className="mb-4 flex justify-between align-center">
-                <p>${property.price_per_night} * {nights} nights</p>
+                <p>
+                    ${property.price_per_night} * {nights} nights
+                </p>
                 <p>${property.price_per_night * nights}</p>
             </div>
 

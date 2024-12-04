@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: 'standalone',
+    output: "standalone",
     images: {
         // TODO i guess here just need to configure cache in nginx.conf
         unoptimized: true,
@@ -16,9 +16,7 @@ const nextConfig = {
     experimental: {
         // taint: true,
         serverActions: {
-            allowedOrigins: [
-                `${process.env.NEXT_PUBLIC_HOST_NAME}`,
-            ],
+            allowedOrigins: [`${process.env.NEXT_PUBLIC_HOST_NAME}`],
         },
     },
 };

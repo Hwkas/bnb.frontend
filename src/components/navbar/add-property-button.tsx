@@ -1,11 +1,9 @@
 "use client";
 
-
 import React from "react";
 // my hooks
 import useAddPropertyModal from "@/hooks/use-add-property-modal";
 import useLoginModal from "@/hooks/use-login-modal";
-
 
 interface AddPropertyProps {
     userId?: string | null;
@@ -19,8 +17,7 @@ const AddPropertyButton: React.FC<AddPropertyProps> = ({ userId }) => {
     const airBnbYourHome = async () => {
         if (userId) {
             addPropertyModal.open();
-        }
-        else {
+        } else {
             loginModal.open();
         }
     };
@@ -28,7 +25,8 @@ const AddPropertyButton: React.FC<AddPropertyProps> = ({ userId }) => {
     return (
         <div
             onClick={airBnbYourHome}
-            className="p-2 text-sm cursor-pointer font-semibold rounded-full hover:bg-gray-200">
+            className="p-2 text-sm cursor-pointer font-semibold rounded-full hover:bg-gray-200"
+        >
             Django Bnb your home
         </div>
     );

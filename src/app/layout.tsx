@@ -12,28 +12,26 @@ import AddPropertyModal from "@/components/modal/add-property-modal";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Bnb Clone",
-  description: "AirBnb Clone App.",
+    title: "Bnb Clone",
+    description: "AirBnb Clone App.",
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Navbar />
-        <div className="pt-32">
-          {children}
-        </div>
+    return (
+        <html lang="en">
+            <body className={inter.className}>
+                <Navbar />
+                <div className="pt-32">{children}</div>
 
-        <SearchModal />
-        <LoginModal />
-        <SignupModal />
-        <AddPropertyModal />
-      </body>
-    </html>
-  );
+                <SearchModal />
+                <LoginModal />
+                <SignupModal />
+                <AddPropertyModal />
+            </body>
+        </html>
+    );
 }

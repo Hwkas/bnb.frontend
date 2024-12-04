@@ -1,17 +1,18 @@
 "use client";
 
-
 import { useRouter } from "next/navigation";
 // my custom types
 import { ConversationType } from "@/app/inbox/page";
 
-
 interface ConversationProps {
     userId: string;
     conversation: ConversationType;
-};
+}
 
-const Conversation: React.FC<ConversationProps> = ({ userId, conversation }) => {
+const Conversation: React.FC<ConversationProps> = ({
+    userId,
+    conversation,
+}) => {
     const router = useRouter();
     const other_user = conversation.users.find((user) => user.id != userId);
 

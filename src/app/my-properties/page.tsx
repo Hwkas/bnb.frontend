@@ -3,7 +3,6 @@ import PropertyList from "@/components/properties/property-list";
 // my functions
 import { getUserId } from "@/lib/actions";
 
-
 const MyPropertiesPage = async () => {
     const userId = await getUserId();
 
@@ -12,12 +11,9 @@ const MyPropertiesPage = async () => {
             <h1 className="my-6 text-2xl">My Properties</h1>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <PropertyList
-                    landlord_id={userId}
-                />
+                <PropertyList landlord_id={userId} />
             </div>
-
-        </main >
+        </main>
     );
 };
 

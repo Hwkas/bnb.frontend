@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState } from "react";
 import { Range } from "react-date-range";
 // my components
@@ -11,7 +10,6 @@ import DatePicker from "../forms/calender";
 // my hooks
 import useSearchModal, { SearchQueryType } from "@/hooks/use-search-model";
 
-
 const initialDateRange = {
     startDate: new Date(),
     endDate: new Date(),
@@ -19,7 +17,7 @@ const initialDateRange = {
 };
 
 const SearchModal = () => {
-    let content = (<></>);
+    let content = <></>;
     const searchModal = useSearchModal();
     const [country, setCountry] = useState<SelectCountryValue>();
     const [dateRange, setDateRange] = useState<Range>(initialDateRange);
@@ -30,13 +28,12 @@ const SearchModal = () => {
     const _setDateRange = (selection: Range) => {
         if (searchModal.step === "CheckIn") {
             searchModal.open("CheckOut");
-        }
-        else if (searchModal.step === "CheckOut") {
+        } else if (searchModal.step === "CheckOut") {
             searchModal.open("Details");
         }
 
         setDateRange(selection);
-    }
+    };
 
     const closeAndSearch = () => {
         const newSearchQuery: SearchQueryType = {
@@ -51,7 +48,7 @@ const SearchModal = () => {
 
         searchModal.setQuery(newSearchQuery);
         searchModal.close();
-    }
+    };
 
     const contentLocation = (
         <>
@@ -175,14 +172,11 @@ const SearchModal = () => {
 
     if (searchModal.step === "location") {
         content = contentLocation;
-    }
-    else if (searchModal.step === "CheckIn") {
+    } else if (searchModal.step === "CheckIn") {
         content = contentCheckIn;
-    }
-    else if (searchModal.step === "CheckOut") {
+    } else if (searchModal.step === "CheckOut") {
         content = contentCheckOut;
-    }
-    else if (searchModal.step === "Details") {
+    } else if (searchModal.step === "Details") {
         content = contentDetails;
     }
 

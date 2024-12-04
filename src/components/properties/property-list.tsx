@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useEffect, useState } from "react";
 import format from "date-fns/format";
 import { useSearchParams } from "next/navigation";
@@ -9,7 +8,6 @@ import PropertyListItem from "./property-list-item";
 import useSearchModal from "@/hooks/use-search-model";
 // my functions
 import apiServices from "@/services/api-services";
-
 
 export type PropertyType = {
     id: string;
@@ -24,7 +22,10 @@ interface PropertListProps {
     favourites?: boolean | null;
 }
 
-const PropertyList: React.FC<PropertListProps> = ({ landlord_id, favourites }) => {
+const PropertyList: React.FC<PropertListProps> = ({
+    landlord_id,
+    favourites,
+}) => {
     const params = useSearchParams();
     const searchModal = useSearchModal();
     const country = searchModal.query.country;
@@ -50,28 +51,33 @@ const PropertyList: React.FC<PropertListProps> = ({ landlord_id, favourites }) =
                 }
             }
             return property;
-        })
+        });
 
         setProperties(tmpProperties);
-    }
+    };
 
     const getProperties = async () => {
-        let url = "/api/properties/"
+        let url = "/api/properties/";
 
         if (landlord_id) {
-            url += `?landlord_id=${landlord_id}`
+            url += `?landlord_id=${landlord_id}`;
         } else if (favourites) {
-            url += "?favourites=true"
-        }
-        else {
+            url += "?favourites=true";
+        } else {
             let urlQuery = "";
 
             urlQuery += country ? "&country=" + country : "";
             urlQuery += numGuests ? "&numGuests=" + numGuests : "";
             urlQuery += numBedrooms ? "&numBedrooms=" + numBedrooms : "";
             urlQuery += numBathrooms ? "&numBathrooms=" + numBathrooms : "";
-            urlQuery += checkInDate ? "&checkInDate=" + format(checkInDate, "yyyy-MM-dd") : "";
-            urlQuery += checkOutDate ? "&checkOutDate=" + format(checkOutDate, "yyyy-MM-dd") : "";
+            urlQuery +=
+                checkInDate ?
+                    "&checkInDate=" + format(checkInDate, "yyyy-MM-dd")
+                :   "";
+            urlQuery +=
+                checkOutDate ?
+                    "&checkOutDate=" + format(checkOutDate, "yyyy-MM-dd")
+                :   "";
             urlQuery += category ? "&category=" + category : "";
 
             if (urlQuery.length) {
@@ -84,7 +90,7 @@ const PropertyList: React.FC<PropertListProps> = ({ landlord_id, favourites }) =
         const response = await apiServices.get(url);
         console.log("response: ", response);
         setProperties(response.data);
-    }
+    };
 
     useEffect(() => {
         getProperties();
@@ -97,7 +103,9 @@ const PropertyList: React.FC<PropertListProps> = ({ landlord_id, favourites }) =
                     <PropertyListItem
                         key={property.id}
                         property={property}
-                        markFavourite={(is_favourite) => markFavourite(property.id, is_favourite)}
+                        markFavourite={(is_favourite) =>
+                            markFavourite(property.id, is_favourite)
+                        }
                     />
                 );
             })}

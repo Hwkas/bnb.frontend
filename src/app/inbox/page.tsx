@@ -4,7 +4,6 @@ import Conversation from "@/components/inbox/conversation";
 import { getUserId } from "@/lib/actions";
 import apiServices from "@/services/api-services";
 
-
 export type UserType = {
     id: string;
     name: string;
@@ -25,7 +24,7 @@ const InboxPage = async () => {
                 <p>You need to be authenticated </p>
             </main>
         );
-    };
+    }
 
     const conversations = await apiServices.get("/api/chat/");
 
@@ -42,7 +41,7 @@ const InboxPage = async () => {
                     />
                 );
             })}
-        </main >
+        </main>
     );
 };
 

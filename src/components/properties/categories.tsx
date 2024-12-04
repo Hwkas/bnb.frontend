@@ -1,5 +1,3 @@
-
-
 import Image from "next/image";
 
 interface CategoriesProps {
@@ -7,7 +5,10 @@ interface CategoriesProps {
     setCategory: (Category: string) => void;
 }
 
-const Categories: React.FC<CategoriesProps> = ({ dataCategory, setCategory }) => {
+const Categories: React.FC<CategoriesProps> = ({
+    dataCategory,
+    setCategory,
+}) => {
     return (
         <>
             <div className="pt-3 cursor-pointer pb-6 flex item-center space-x-12">
@@ -64,7 +65,7 @@ const Categories: React.FC<CategoriesProps> = ({ dataCategory, setCategory }) =>
                 </div>
             </div>
         </>
-    )
+    );
 };
 
-export default Categories
+export default Categories;

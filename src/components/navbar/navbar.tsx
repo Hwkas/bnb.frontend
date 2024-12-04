@@ -7,7 +7,6 @@ import AddPropertyButton from "./add-property-button";
 // my functions
 import { getUserId } from "@/lib/actions";
 
-
 const Navbar = async () => {
     const userId = await getUserId();
 
@@ -29,12 +28,8 @@ const Navbar = async () => {
                     </div>
 
                     <div className="flex items-center space-x-6">
-                        <AddPropertyButton
-                            userId={userId}
-                        />
-                        <UserNav
-                            userId={userId}
-                        />
+                        <AddPropertyButton userId={userId} />
+                        <UserNav userId={userId} />
                     </div>
                 </div>
             </div>

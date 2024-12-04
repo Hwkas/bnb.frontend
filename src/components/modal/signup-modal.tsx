@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 // my components
@@ -11,7 +10,6 @@ import useSignupModal from "@/hooks/use-signup-modal";
 // my functions
 import apiServices from "@/services/api-services";
 import { handleLogin } from "@/lib/actions";
-
 
 const SignupModal = () => {
     const router = useRouter();
@@ -34,19 +32,24 @@ const SignupModal = () => {
         );
 
         if (response.access) {
-            await handleLogin(response.user.pk, response.access, response.refresh)
+            await handleLogin(
+                response.user.pk,
+                response.access,
+                response.refresh,
+            );
 
             signupModal.close();
             router.push("/");
-        }
-        else {
-            const responseErrors: string[] = Object.values(response).map((error: any) => {
-                return error;
-            });
+        } else {
+            const responseErrors: string[] = Object.values(response).map(
+                (error: any) => {
+                    return error;
+                },
+            );
 
             setErrors(responseErrors);
         }
-    }
+    };
 
     const content = (
         <>
@@ -55,19 +58,25 @@ const SignupModal = () => {
                 className="space-y-4"
             >
                 <input
-                    onChange={(e) => { setEmail(e.target.value) }}
+                    onChange={(e) => {
+                        setEmail(e.target.value);
+                    }}
                     placeholder="Your e-mail"
                     type="email"
                     className="w-full h-54 px-4 border border-gray-300 rounded-xl"
                 />
                 <input
-                    onChange={(e) => { setPasswod1(e.target.value) }}
+                    onChange={(e) => {
+                        setPasswod1(e.target.value);
+                    }}
                     placeholder="Your password"
                     type="password"
                     className="w-full h-54 px-4 border border-gray-300 rounded-xl"
                 />
                 <input
-                    onChange={(e) => { setPasswod2(e.target.value) }}
+                    onChange={(e) => {
+                        setPasswod2(e.target.value);
+                    }}
                     placeholder="Repeat password"
                     type="password"
                     className="w-full h-54 px-4 border border-gray-300 rounded-xl"
